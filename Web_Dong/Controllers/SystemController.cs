@@ -11,6 +11,11 @@ namespace Web_Dong.Controllers
         // GET: System
         public ActionResult Index()
         {
+            if (Session["loginsuccess"] == null)
+            {
+                return Redirect("/");
+            }
+            ViewBag.username = Session["loginsuccess"];
             return View();
         }
     }

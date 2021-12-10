@@ -17,17 +17,26 @@ namespace Web_Dong.Controllers
 
         public ActionResult Index(Thanhvien tv)
         {
-            conn.Open();
-            cmd.Connection = conn;
-            cmd.CommandText = "select * from Thanhvien where username='" + tv.username + "' and password='" + tv.password + "' ";
-            dr = cmd.ExecuteReader();
-            if (dr.Read())
+            if (Request.HttpMethod == "POST")
             {
-                ViewBag.mgs = "Đăng nhập thành công";
+                conn.Open();
+                cmd.Connection = conn;
+                cmd.CommandText = "select * from Thanhvien where username='" + tv.username + "' and password='" + tv.password + "' ";
+                dr = cmd.ExecuteReader();
+                if (dr.Read())
+                {
+                    //ViewBag.mgs = "Đăng nhập thành công";
+                    Session["loginsuccess"] = tv.username;
+                    return Redirect("/he-thong");
+                }
+                else
+                {
+                    ViewBag.mgs = "Đăng nhập không thành công";
+                }
             }
             else
             {
-                ViewBag.mgs = "Đăng nhập không thành công";
+                ViewBag.mgs = "";
             }
 
             return View();
