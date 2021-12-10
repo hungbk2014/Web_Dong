@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/BaomatLayout.cshtml";
+}
+
+
+<form action="/dang-nhap" method="post">
+<tr bgcolor=green>
+    <td colspan="2" align="center" height=300 valign="middle">
+        <table border="0" width=40% style="color:#fff">
+            <b>@ViewBag.mgs</b>
+            <tr>
+                <td>Username</td>
+                <td><input type="text" name="username" placeholder="Vui lòng nhập username"></td>
+            </tr>
+            <tr>
+                <td>Mật khẩu</td>
+                <td><input type="password" name="password" placeholder="Vui lòng nhập mật khẩu"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Đăng nhập"></td>
+            </tr>
+        </table>
+    </td>
+</tr>
+</form>
+
