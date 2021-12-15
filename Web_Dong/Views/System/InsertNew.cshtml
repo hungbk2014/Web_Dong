@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "InsertNew";
+    Layout = "~/Views/Shared/SystemLayout.cshtml";
+}
+
+<form action="them-thanh-vien" method="post">
+    <td valign="top">
+        <table border=0 width=600>
+            <tr bgcolor=green style="color: #fff;" align="center">
+                <td colspan="2">Thêm Thành Viên</td>
+            </tr>
+            <tr align="center">
+                <td colspan="2">@ViewBag.Thongtin</td>
+            </tr>
+            <tr>
+                <td width=20%>Username</td>
+                <td><input type="text" name="username" required></td>
+            </tr>
+            <tr>
+                <td width=20%>Password</td>
+                <td><input type="password" name="password" required></td>
+            </tr>
+            <tr>
+                <td width=20%>Email</td>
+                <td><input type="text" name="email"></td>
+            </tr>
+            <tr>
+                <td width=20%>Họ và tên </td>
+                <td><input type="text" name="hovaten"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Thêm thành viên"></td>
+            </tr>
+        </table>
+    </td>
+</form>
+

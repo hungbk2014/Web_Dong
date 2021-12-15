@@ -44,6 +44,12 @@ namespace Web_Dong
           );
 
             routes.MapRoute(
+              name: "Them thanh vien",
+              url: "them-thanh-vien",
+              defaults: new { controller = "System", action = "InsertNew", id = UrlParameter.Optional }
+          );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "MainPage", action = "Index", id = UrlParameter.Optional }

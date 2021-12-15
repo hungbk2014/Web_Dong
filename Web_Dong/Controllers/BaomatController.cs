@@ -17,6 +17,7 @@ namespace Web_Dong.Controllers
 
         public ActionResult Index(Thanhvien tv)
         {
+
             if (Request.HttpMethod == "POST")
             {
                 conn.Open();
@@ -36,6 +37,10 @@ namespace Web_Dong.Controllers
             }
             else
             {
+                if (Session["loginsuccess"] != null)
+                {
+                    return Redirect("/he-thong");
+                }
                 ViewBag.mgs = "";
             }
 
