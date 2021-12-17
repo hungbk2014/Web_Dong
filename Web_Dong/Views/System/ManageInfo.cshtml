@@ -1,7 +1,7 @@
 ﻿
 @{
-    ViewBag.Title = "GioiThieu";
-    Layout = "~/Views/Shared/MainLayout.cshtml";
+    ViewBag.Title = "ManageInfo";
+    Layout = "~/Views/Shared/SystemLayout.cshtml";
 }
 
 <td valign="top">
@@ -11,6 +11,9 @@
         </tr>
         <tr>
             <td>@Model.Rows[0]["text"]</td>
+        </tr>
+        <tr>
+            <td><a href="/he-thong/sua-gioi-thieu">Sửa</a></td>
         </tr>
     </table>
 </td>

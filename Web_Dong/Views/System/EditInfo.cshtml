@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "EditInfo";
+    Layout = "~/Views/Shared/SystemLayout.cshtml";
+}
+<form action="/he-thong/sua-gioi-thieu" method="post">
+    <td valign="top">
+        <table border=0 width=600>
+            <tr>
+                <td>Giới thiệu</td>
+                <td><textarea rows="10" cols="70%" name="text" style="font-family:'Times New Roman'; font-size: inherit">@Model.Rows[0]["text"]</textarea></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Xác nhận"></td>
+            </tr>
+            <tr>
+            </tr>
+        </table>
+    </td>
+</form>
+

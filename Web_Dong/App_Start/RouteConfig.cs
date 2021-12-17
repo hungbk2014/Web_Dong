@@ -44,6 +44,31 @@ namespace Web_Dong
           );
 
             routes.MapRoute(
+              name: "Quan ly gioi thieu",
+              url: "he-thong/quan-ly-gioi-thieu",
+              defaults: new { controller = "System", action = "Manageinfo", id = UrlParameter.Optional }
+          );
+
+            routes.MapRoute(
+              name: "Sua gioi thieu",
+              url: "he-thong/sua-gioi-thieu",
+              defaults: new { controller = "System", action = "Editinfo", id = UrlParameter.Optional }
+          );
+
+
+            routes.MapRoute(
+              name: "Xoa thanh vien",
+              url: "he-thong/xoa-thanh-vien/{id}",
+              defaults: new { controller = "System", action = "DeleteMem", id = UrlParameter.Optional }
+          );
+
+            routes.MapRoute(
+              name: "Dang xuat",
+              url: "dang-xuat",
+              defaults: new { controller = "System", action = "Logout", id = UrlParameter.Optional }
+          );
+
+            routes.MapRoute(
               name: "Them thanh vien",
               url: "them-thanh-vien",
               defaults: new { controller = "System", action = "InsertNew", id = UrlParameter.Optional }

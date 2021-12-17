@@ -6,39 +6,24 @@
 
 <td valign="top">
     <table border=1 width=600>
-        <tr>
-            <td colspan="3">Chào mừng @ViewBag.username</td>
-        </tr>
         <tr bgcolor=green style="color:#fff" align="center">
             <td>STT</td>
-            <td>TÊN SẢN PHẨM</td>
-            <td>HÌNH ẢNH</td>
+            <td>Username</td>
+            <td>Email</td>
+            <td>Họ và tên</td>
+            <td>Thao tác</td>
         </tr>
-        <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-        </tr>
+        @foreach (var row in Model.Rows)
+            {
+    <tr>
+        <td> @row["id"]</td>
+        <td> @row["username"]</td>
+        <td> @row["email"]</td>
+        <td> @row["hovaten"]</td>
+        <td> <a href="he-thong/sua-thanh-vien/@row["id"]">Thêm</a>|<a 
+            href="he-thong/xoa-thanh-vien/@row["id"]">Xoá</a></td>
+    </tr>
+            }
     </table>
 </td>
 <!--ket thuc cot phai-->

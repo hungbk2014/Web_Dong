@@ -124,6 +124,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Gioithieu.cs" />
     <Compile Include="Models\Thanhvien.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -163,6 +164,8 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Views\System\InsertNew.cshtml" />
+    <Content Include="Views\System\ManageInfo.cshtml" />
+    <Content Include="Views\System\EditInfo.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
