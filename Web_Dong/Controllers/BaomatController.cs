@@ -11,7 +11,7 @@ namespace Web_Dong.Controllers
 {
     public class BaomatController : Controller
     {
-        SqlConnection conn = new SqlConnection("Server=DESKTOP-V79VCG5\\SQLEXPRESS01;Database=Shop_dongho;Trusted_Connection=True;");
+        SqlConnection conn = new SqlConnection("Server=DESKTOP-8JVMMQJ\\SQLEXPRESS;Database=Shop_dongho;Trusted_Connection=True;");
         SqlCommand cmd = new SqlCommand();
         SqlDataReader dr;
 

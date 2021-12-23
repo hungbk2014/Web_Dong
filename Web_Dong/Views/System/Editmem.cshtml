@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Editmem";
+    Layout = "~/Views/Shared/SystemLayout.cshtml";
+}
+
+<form action="" method="post">
+    <td valign="top">
+        <table border=0 width=600>
+            <tr bgcolor=green style="color: #fff;" align="center">
+                <td colspan="2">Update thông tin thành viên</td>
+            </tr>
+            <tr>
+                <td width=20%>Username</td>
+                <td><input type="text" name="username" value="@Model.Rows[0]["username"]" required></td>
+            </tr>
+            <tr>
+                <td width=20%>Password</td>
+                <td><input type="password" name="password" value="@Model.Rows[0]["password"]" required></td>
+            </tr>
+            <tr>
+                <td width=20%>Email</td>
+                <td><input type="text" name="email" value="@Model.Rows[0]["email"]" required></td>
+            </tr>
+            <tr>
+                <td width=20%>Họ và tên </td>
+                <td><input type="text" name="hovaten" value="@Model.Rows[0]["username"]" required></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Xác nhận sửa"></td>
+            </tr>
+        </table>
+    </td>
+</form>
+
+
+

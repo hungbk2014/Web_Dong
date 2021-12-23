@@ -10,7 +10,7 @@
             <td colspan=3 bgcolor="black" align="center"><font color="white">Giới thiệu </font></td>
         </tr>
         <tr>
-            <td>@Model.Rows[0]["text"]</td>
+            <td>@Html.Raw(Model.Rows[0]["text"])</td>
         </tr>
     </table>
 </td>

@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "EditNews";
+    Layout = "~/Views/Shared/SystemLayout.cshtml";
+}
+
+<script src="~/Themes/ckeditor/ckeditor.js"></script>
+
+<form action="/he-thong/sua-tin-tuc" method="post">
+    <td valign="top">
+        <table border=0 width=600>
+            <tr>
+                <td>Giới thiệu</td>
+                <td><textarea rows="10" cols="70%" id="FullDescription" name="text" style="font-family:'Times New Roman'; font-size: inherit">@Model.Rows[0]["text"]</textarea></td>
+                <script>
+                    CKEDITOR.replace("FullDescription");
+                </script>            
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Xác nhận"></td>
+            </tr>
+            <tr>
+            </tr>
+        </table>
+    </td>
+</form>
+

@@ -126,6 +126,7 @@
     </Compile>
     <Compile Include="Models\Gioithieu.cs" />
     <Compile Include="Models\Thanhvien.cs" />
+    <Compile Include="Models\TinTuc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +167,9 @@
     <Content Include="Views\System\InsertNew.cshtml" />
     <Content Include="Views\System\ManageInfo.cshtml" />
     <Content Include="Views\System\EditInfo.cshtml" />
+    <Content Include="Views\System\ManageNews.cshtml" />
+    <Content Include="Views\System\EditNews.cshtml" />
+    <Content Include="Views\System\Editmem.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
