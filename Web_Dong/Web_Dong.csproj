@@ -125,6 +125,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Gioithieu.cs" />
+    <Compile Include="Models\Sanpham.cs" />
     <Compile Include="Models\Thanhvien.cs" />
     <Compile Include="Models\TinTuc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -164,12 +165,15 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
-    <Content Include="Views\System\InsertNew.cshtml" />
+    <Content Include="Views\System\InsertMem.cshtml" />
     <Content Include="Views\System\ManageInfo.cshtml" />
     <Content Include="Views\System\EditInfo.cshtml" />
     <Content Include="Views\System\ManageNews.cshtml" />
     <Content Include="Views\System\EditNews.cshtml" />
     <Content Include="Views\System\Editmem.cshtml" />
+    <Content Include="Views\System\ManageProduct.cshtml" />
+    <Content Include="Views\System\EditProduct.cshtml" />
+    <Content Include="Views\System\InsertProduct.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

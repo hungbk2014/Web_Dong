@@ -11,9 +11,9 @@ namespace Web_Dong.Controllers
 {
     public class SystemController : Controller
     {
-        SqlConnection conn = new SqlConnection("Server=DESKTOP-8JVMMQJ\\SQLEXPRESS;Database=Shop_dongho;Trusted_Connection=True;");
+        readonly SqlConnection conn = new SqlConnection("Server=DESKTOP-8JVMMQJ\\SQLEXPRESS;Database=Shop_dongho;Trusted_Connection=True;");
         SqlCommand cmd = new SqlCommand();
-        SqlDataAdapter dt = new SqlDataAdapter();
+        readonly SqlDataAdapter dt = new SqlDataAdapter();
         
         public ActionResult Index()
         {
@@ -30,6 +30,89 @@ namespace Web_Dong.Controllers
             conn.Close();
             return View(table);
         }
+
+        public ActionResult InsertMem(Thanhvien tv)
+        {
+            if (Session["loginsuccess"] == null)
+            {
+                return Redirect("/");
+            }
+            if (Request.HttpMethod == "POST")
+            {
+                conn.Open();
+                cmd.Connection = conn;
+                cmd.CommandText = "Insert into Thanhvien values ('" + tv.username + "','" + tv.password + "','" + tv.email + "','" + tv.hovaten + "')";
+                int i = cmd.ExecuteNonQuery();
+                conn.Close();
+                if (i >= 1)
+                {
+                    return Redirect("/he-thong");
+                }
+                else
+                {
+                    ViewBag.Thongtin = "Thêm không thành công";
+                }
+            }
+            else
+            {
+                ViewBag.Thongtin = "";
+            }
+            return View();
+        }
+
+        public ActionResult Editmem(Thanhvien tv, int id)
+        {
+            if (Session["loginsuccess"] == null)
+            {
+                return Redirect("/");
+            }
+            if (Request.HttpMethod == "POST")
+            {
+                conn.Open();
+                cmd.Connection = conn;
+                cmd.CommandText = "Update Thanhvien set username='" + tv.username + "', password='" + tv.password + "', email='" + tv.email + "', hovaten= '" + tv.hovaten + "' where id = " + tv.id;
+                int i = cmd.ExecuteNonQuery();
+                conn.Close();
+                if (i >= 1)
+                {
+                    return Redirect("/he-thong");
+                }
+                else
+                {
+                    ViewBag.Thongtin = "Sửa không thành công";
+                }
+            }
+
+            conn.Open();
+            cmd.Connection = conn;
+            cmd.CommandText = "Select * from Thanhvien where id = " + id;
+            SqlDataReader dr = cmd.ExecuteReader();
+            DataTable table = new DataTable();
+            table.Load(dr);
+            conn.Close();
+            return View(table);
+        }
+        public ActionResult DeleteMem(int id)
+        {
+            if (Session["loginsuccess"] == null)
+            {
+                return Redirect("/");
+            }
+            conn.Open();
+            cmd.Connection = conn;
+            cmd.CommandText = "Delete from Thanhvien where id = " + id;
+            int i = cmd.ExecuteNonQuery();
+            conn.Close();
+            if (i >= 1)
+            {
+                return Redirect("/he-thong");
+            }
+            else
+            {
+                return Redirect("/he-thong");
+            }
+        }
+        //Quản lý giới thiệu
         public ActionResult ManageInfo()
         {
             if (Session["loginsuccess"] == null)
@@ -81,6 +164,7 @@ namespace Web_Dong.Controllers
             }
         }
 
+        //Quản lý tin tức
         public ActionResult ManageNews()
         {
             if (Session["loginsuccess"] == null)
@@ -132,7 +216,26 @@ namespace Web_Dong.Controllers
 
         }
 
-        public ActionResult InsertNew(Thanhvien tv)
+        
+
+        //Product
+        public ActionResult ManageProduct()
+        {
+            if (Session["loginsuccess"] == null)
+            {
+                return Redirect("/");
+            }
+            conn.Open();
+            cmd.Connection = conn;
+            cmd.CommandText = "Select * from Sanpham";
+            SqlDataReader dr = cmd.ExecuteReader();
+            DataTable table = new DataTable();
+            table.Load(dr);
+            conn.Close();
+            return View(table);
+        }
+
+        public ActionResult InsertProduct(Sanpham sp)
         {
             if (Session["loginsuccess"] == null)
             {
@@ -142,12 +245,12 @@ namespace Web_Dong.Controllers
             {
                 conn.Open();
                 cmd.Connection = conn;
-                cmd.CommandText = "Insert into Thanhvien values ('" + tv.username + "','" + tv.password + "','" + tv.email + "','" + tv.hovaten + "')";
+                cmd.CommandText = "Insert into Sanpham values ('" + sp.Tensp + "','" + sp.Giasp + "','" + sp.Mota + "','" + sp.Hinhanh + "')";
                 int i = cmd.ExecuteNonQuery();
                 conn.Close();
                 if (i >= 1)
                 {
-                    return Redirect("/he-thong");
+                    return Redirect("/he-thong/quan-ly-san-pham");
                 }
                 else
                 {
@@ -161,7 +264,7 @@ namespace Web_Dong.Controllers
             return View();
         }
 
-        public ActionResult Editmem(Thanhvien tv, int id)
+        public ActionResult EditProduct(Sanpham sp, int id)
         {
             if (Session["loginsuccess"] == null)
             {
@@ -171,12 +274,12 @@ namespace Web_Dong.Controllers
             {
                 conn.Open();
                 cmd.Connection = conn;
-                cmd.CommandText = "Update Thanhvien set username='" + tv.username + "', password='" + tv.password + "', email='" + tv.email + "', hovaten= '" + tv.hovaten + "' where id = " + tv.id; 
+                cmd.CommandText = "Update Sanpham set tensp='" + sp.Tensp + "', giasp='" + sp.Giasp + "', mota='" + sp.Mota + "', hinhanh= '" + sp.Hinhanh + "' where id = " + sp.Id;
                 int i = cmd.ExecuteNonQuery();
                 conn.Close();
                 if (i >= 1)
                 {
-                    return Redirect("/he-thong");
+                    return Redirect("/he-thong/quan-ly-san-pham");
                 }
                 else
                 {
@@ -186,15 +289,14 @@ namespace Web_Dong.Controllers
 
             conn.Open();
             cmd.Connection = conn;
-            cmd.CommandText = "Select * from Thanhvien where id = " + id;
+            cmd.CommandText = "Select * from Sanpham where id = " + id;
             SqlDataReader dr = cmd.ExecuteReader();
             DataTable table = new DataTable();
             table.Load(dr);
             conn.Close();
             return View(table);
         }
-
-        public ActionResult DeleteMem (int id)
+        public ActionResult DeleteProduct(int id)
         {
             if (Session["loginsuccess"] == null)
             {
@@ -202,18 +304,20 @@ namespace Web_Dong.Controllers
             }
             conn.Open();
             cmd.Connection = conn;
-            cmd.CommandText = "Delete from Thanhvien where id = " + id;
+            cmd.CommandText = "Delete from Sanpham where id = " + id;
             int i = cmd.ExecuteNonQuery();
             conn.Close();
             if (i >= 1)
             {
-                return Redirect("/he-thong");
+                return Redirect("/he-thong/quan-ly-san-pham");
             }
             else
             {
-                return Redirect("/he-thong");
+                return Redirect("/he-thong/quan-ly-san-pham");
             }
         }
+
+
 
         public ActionResult Logout()
         {

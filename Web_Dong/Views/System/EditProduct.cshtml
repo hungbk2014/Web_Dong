@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "EditProduct";
+    Layout = "~/Views/Shared/SystemLayout.cshtml";
+}
+
+<form action="" method="post">
+    <td valign="top">
+        <table border=0 width=600>
+            <tr bgcolor=green style="color: #fff;" align="center">
+                <td colspan="2">Update thông tin sản phẩm</td>
+            </tr>
+            <tr>
+                <td width=20%>Tên sản phẩm</td>
+                <td><input type="text" name="tensp" value="@Model.Rows[0]["tensp"]" required></td>
+            </tr>
+            <tr>
+                <td width=20%>Giá sản phẩm</td>
+                <td><input type="password" name="giasp" value="@Model.Rows[0]["giasp"]" required></td>
+            </tr>
+            <tr>
+                <td width=20%>Hình ảnh</td>
+                <td><input type="text" name="hinhanh" value="@Model.Rows[0]["hinhanh"]" required></td>
+            </tr>
+            <tr>
+                <td width=20%>Mô tả</td>
+                <td><input type="text" name="mota" value="@Model.Rows[0]["mota"]" required></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Xác nhận sửa"></td>
+            </tr>
+        </table>
+    </td>
+</form>

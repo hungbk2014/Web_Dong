@@ -14,16 +14,24 @@
             <td>Thao tác</td>
         </tr>
         @foreach (var row in Model.Rows)
-            {
-    <tr>
-        <td> @row["id"]</td>
-        <td> @row["username"]</td>
-        <td> @row["email"]</td>
-        <td> @row["hovaten"]</td>
-        <td> <a href="he-thong/sua-thanh-vien/@row["id"]">Sửa</a>|<a 
-            href="he-thong/xoa-thanh-vien/@row["id"]">Xoá</a></td>
-    </tr>
-            }
+        {
+            <tr>
+                <td> @row["id"]</td>
+                <td> @row["username"]</td>
+                <td> @row["email"]</td>
+                <td> @row["hovaten"]</td>
+                <td>
+                    <a href="/he-thong/sua-thanh-vien/@row["id"]">Sửa</a>|<a href="/he-thong/xoa-thanh-vien/@row["id"]">Xoá</a>
+                </td>
+            </tr>
+        }
+    </table>
+    <table border=0 width=600>
+        <tr>
+            <td>
+                <a href="/he-thong/them-thanh-vien"><button type="button">Thêm thành viên</button></a>
+            </td>
+        </tr>
     </table>
 </td>
 <!--ket thuc cot phai-->

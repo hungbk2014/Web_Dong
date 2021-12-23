@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "ManageProduct";
+    Layout = "~/Views/Shared/SystemLayout.cshtml";
+}
+
+<td valign="top">
+    <table border=1 width=600>
+        <tr bgcolor=green style="color:#fff" align="center">
+            <td>STT</td>
+            <td>Tên sản phẩm</td>
+            <td>Giá sản phẩm</td>
+            <td>Hình ảnh</td>
+            <td>Mô tả</td>
+            <td>Thao tác</td>
+        </tr>
+        @foreach (var row in Model.Rows)
+        {
+            <tr>
+                <td> @row["id"]</td>
+                <td> @row["tensp"]</td>
+                <td> @row["giasp"]</td>
+                <td> @row["hinhanh"]</td>
+                <td> @row["mota"]</td>
+                <td>
+                    <a href="/he-thong/sua-san-pham/@row["id"]">Sửa</a>|<a href="/he-thong/xoa-san-pham/@row["id"]">Xoá</a>
+                </td>
+            </tr>
+        }
+    </table>
+    <table border=0 width=600>
+        <tr>
+            <td>
+                <a href="/he-thong/them-san-pham"><button type="button">Thêm sản phẩm</button></a>
+            </td>
+        </tr>
+    </table>
+</td>
+
