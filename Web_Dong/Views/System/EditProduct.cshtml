@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/SystemLayout.cshtml";
 }
 
-<form action="" method="post">
+<form action="" method="post" enctype="multipart/form-data">
     <td valign="top">
         <table border=0 width=600>
             <tr bgcolor=green style="color: #fff;" align="center">
@@ -16,11 +16,12 @@
             </tr>
             <tr>
                 <td width=20%>Giá sản phẩm</td>
-                <td><input type="password" name="giasp" value="@Model.Rows[0]["giasp"]" required></td>
+                <td><input type="text" name="giasp" value="@Model.Rows[0]["giasp"]" required></td>
             </tr>
             <tr>
                 <td width=20%>Hình ảnh</td>
-                <td><input type="text" name="hinhanh" value="@Model.Rows[0]["hinhanh"]" required></td>
+                <td>
+                <input type="file" name="Hinhanh" accept="image/*" value="~/Content/hinhanh/@Model.Rows[0]["hinhanh"]" required></td>
             </tr>
             <tr>
                 <td width=20%>Mô tả</td>

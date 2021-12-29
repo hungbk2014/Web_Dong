@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/SystemLayout.cshtml";
 }
 
-<form action="" method="post">
+<form action="" method="post" enctype="multipart/form-data">
     <td valign="top">
         <table border=0 width=600>
             <tr bgcolor=green style="color: #fff;" align="center">
@@ -20,7 +20,9 @@
             </tr>
             <tr>
                 <td width=20%>Hình ảnh</td>
-                <td><input type="text" name="Hinhanh"></td>
+                <td>
+                <input type="file" name="Hinhanh" accept="image/*" >
+                </td>
             </tr>
             <tr>
                 <td width=20%>Mô tả</td>

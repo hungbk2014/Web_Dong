@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -235,27 +236,35 @@ namespace Web_Dong.Controllers
             return View(table);
         }
 
-        public ActionResult InsertProduct(Sanpham sp)
+        public ActionResult InsertProduct(Sanpham sp, HttpPostedFileBase Hinhanh)
         {
             if (Session["loginsuccess"] == null)
             {
                 return Redirect("/");
             }
+            
             if (Request.HttpMethod == "POST")
-            {
+            { 
                 conn.Open();
                 cmd.Connection = conn;
-                cmd.CommandText = "Insert into Sanpham values ('" + sp.Tensp + "','" + sp.Giasp + "','" + sp.Mota + "','" + sp.Hinhanh + "')";
-                int i = cmd.ExecuteNonQuery();
-                conn.Close();
-                if (i >= 1)
+                if (Hinhanh.ContentLength > 0)
                 {
-                    return Redirect("/he-thong/quan-ly-san-pham");
-                }
-                else
-                {
-                    ViewBag.Thongtin = "Thêm không thành công";
-                }
+                    string _Filename = Path.GetFileName(Hinhanh.FileName);
+                    string _path = Path.Combine(Server.MapPath("~/Content/hinhanh"), _Filename);
+                    Hinhanh.SaveAs(_path);
+
+                    cmd.CommandText = "Insert into Sanpham values (N'" + sp.Tensp + "','" + sp.Giasp + "','" + sp.Mota + "','" + _Filename + "')";
+                    int i = cmd.ExecuteNonQuery();
+                    conn.Close();
+                    if (i >= 1)
+                    {
+                        return Redirect("/he-thong/quan-ly-san-pham");
+                    }
+                    else
+                    {
+                        ViewBag.Thongtin = "Thêm không thành công";
+                    }
+                }               
             }
             else
             {
@@ -264,17 +273,22 @@ namespace Web_Dong.Controllers
             return View();
         }
 
-        public ActionResult EditProduct(Sanpham sp, int id)
+        public ActionResult EditProduct(Sanpham sp, int id, HttpPostedFileBase Hinhanh)
         {
             if (Session["loginsuccess"] == null)
             {
                 return Redirect("/");
             }
+            
             if (Request.HttpMethod == "POST")
             {
                 conn.Open();
                 cmd.Connection = conn;
-                cmd.CommandText = "Update Sanpham set tensp='" + sp.Tensp + "', giasp='" + sp.Giasp + "', mota='" + sp.Mota + "', hinhanh= '" + sp.Hinhanh + "' where id = " + sp.Id;
+                string _Filename = Path.GetFileName(Hinhanh.FileName);
+                string _path = Path.Combine(Server.MapPath("~/Content/hinhanh"), _Filename);
+                Hinhanh.SaveAs(_path);
+
+                cmd.CommandText = "Update Sanpham set tensp= N'" + sp.Tensp + "', giasp='" + sp.Giasp + "', mota='" + sp.Mota + "', hinhanh= '" + _Filename + "' where id = " + sp.Id;
                 int i = cmd.ExecuteNonQuery();
                 conn.Close();
                 if (i >= 1)
@@ -304,17 +318,29 @@ namespace Web_Dong.Controllers
             }
             conn.Open();
             cmd.Connection = conn;
+            //cmd.CommandText = "Select hinhanh from Hinhanh where id = " + id;
+            //SqlDataReader dr = cmd.ExecuteReader();
+            //if (dr.Read())
+            //{
+            //    string image = dr.GetString(0);
+            //    string path = "~Content/hinhanh/" + image;
             cmd.CommandText = "Delete from Sanpham where id = " + id;
             int i = cmd.ExecuteNonQuery();
             conn.Close();
             if (i >= 1)
             {
+                    
                 return Redirect("/he-thong/quan-ly-san-pham");
             }
             else
             {
                 return Redirect("/he-thong/quan-ly-san-pham");
             }
+            //}
+            //else
+            //{
+            //    return Redirect("/he-thong/quan-ly-san-pham");
+            //}
         }
 
 

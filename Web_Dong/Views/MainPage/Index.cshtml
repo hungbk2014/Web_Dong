@@ -9,36 +9,23 @@
         <tr>
             <td colspan=3 bgcolor="black" align="center"><font color="white">DANH SÁCH ĐỒNG HỒ </font></td>
         </tr>
-        <tr>
-            <td><img src="~/Content/hinhanh/1.jpg" width=200 height=170></td>
-            <td><img src="~/Content/hinhanh/2.jpg" width=200 height=170></td>
-            <td><img src="~/Content/hinhanh/3.jpg" width=200 height=170></td>
-        </tr>
-        <tr>
-            <td align="center" bgcolor="black"><font color="white">Đồng hồ Nam TITONI TQ52918 S-ST-584</font></td>
-            <td align="center" bgcolor="black"><font color="white">Đồng hồ Nam TITONI 93709 SY-615</font></td>
-            <td align="center" bgcolor="black"><font color="white">Đồng hồ Nam TITONI 93808 SRG-618 </font></td>
-        </tr>
-        <tr>
-            <td><img src="~/Content/hinhanh/4.jpg" width=200 height=170></td>
-            <td><img src="~/Content/hinhanh/5.jpg" width=200 height=170></td>
-            <td><img src="~/Content/hinhanh/6.jpg" width=200 height=170></td>
-        </tr>
-        <tr>
-            <td align="center" bgcolor="black"><font color="white">Đồng hồ Nam MVW ML059-01 </font></td>
-            <td align="center" bgcolor="black"><font color="white">Đồng hồ Nam MVW ML057-02 </font></td>
-            <td align="center" bgcolor="black"><font color="white">Đồng hồ Nam MVW ML057-01 </font></td>
-        </tr>
-        <tr>
-            <td><img src="~/Content/hinhanh/7.jpg" width=200 height=170></td>
-            <td><img src="~/Content/hinhanh/8.jpg" width=200 height=170></td>
-            <td><img src="~/Content/hinhanh/9.jpg" width=200 height=170></td>
-        </tr>
-        <tr>
-            <td align="center" bgcolor="black"><font color="white">Đồng hồ Nam Fossil FS5305</font></td>
-            <td align="center" bgcolor="black"><font color="white">Đồng hồ Nam Fossil FS5743</font></td>
-            <td align="center" bgcolor="black"><font color="white">Đồng hồ Nữ Fossil FS5652 </font></td>
-        </tr>
-    </table>
+        @for (int i = 0; i < 3; i++)
+        {
+            <tr>
+                @for (int y = 0; y < 3; y++)
+                {
+
+                    <td><img src="~/Content/hinhanh/@Model.Rows[3 * i + y]["hinhanh"]" width=200 height=170></td>
+
+                }
+            </tr>
+            <tr>
+                @for (int y = 0; y < 3; y++)
+                {
+                    <td align="center" bgcolor="black"><font color="white">@Model.Rows[3 * i + y]["tensp"]</font></td>
+                }
+            </tr>
+        }
+            </table>
 </td>
 <!--ket thuc cot phai-->
