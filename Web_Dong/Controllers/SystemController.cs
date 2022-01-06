@@ -4,15 +4,17 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using Web_Dong.Helper;
 using Web_Dong.Models;
 
 namespace Web_Dong.Controllers
 {
     public class SystemController : Controller
     {
-        readonly SqlConnection conn = new SqlConnection("Server=DESKTOP-8JVMMQJ\\SQLEXPRESS;Database=Shop_dongho;Trusted_Connection=True;");
+        readonly SqlConnection conn = new SqlConnection("Data Source=DESKTOP-8JVMMQJ\\SQLEXPRESS;Initial Catalog=Shop_dongho;Integrated Security=True;");
         SqlCommand cmd = new SqlCommand();
         readonly SqlDataAdapter dt = new SqlDataAdapter();
         
@@ -24,7 +26,8 @@ namespace Web_Dong.Controllers
             }
             conn.Open();
             cmd.Connection = conn;
-            cmd.CommandText = "Select * from Thanhvien";
+            cmd.CommandText = "Danhsach_TV";
+            cmd.CommandType = CommandType.StoredProcedure;
             SqlDataReader dr = cmd.ExecuteReader();
             DataTable table = new DataTable();
             table.Load(dr);
@@ -40,23 +43,39 @@ namespace Web_Dong.Controllers
             }
             if (Request.HttpMethod == "POST")
             {
-                conn.Open();
-                cmd.Connection = conn;
-                cmd.CommandText = "Insert into Thanhvien values ('" + tv.username + "','" + tv.password + "','" + tv.email + "','" + tv.hovaten + "')";
-                int i = cmd.ExecuteNonQuery();
-                conn.Close();
-                if (i >= 1)
+                Regex _email = new Regex(@"[a-zA-Z0-9]*@[a-zA-Z0-9]*\.[a-zA-Z0-9]*");
+                if (_email.Match(tv.email).Success)
                 {
-                    return Redirect("/he-thong");
+                   
+
+                    conn.Open();
+                    cmd = new SqlCommand("Them_TV", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@USERNAME", SqlDbType.NVarChar).Value = tv.username;
+                    cmd.Parameters.AddWithValue("@PASSWORD", SqlDbType.NVarChar).Value = tv.password;
+                    cmd.Parameters.AddWithValue("@EMAIL", SqlDbType.NVarChar).Value = tv.email;
+                    cmd.Parameters.AddWithValue("@HOVATEN", SqlDbType.NVarChar).Value = tv.hovaten;                   
+
+                    int i = cmd.ExecuteNonQuery();
+                    conn.Close();
+                    if (i >= 1)
+                    {
+                        return Redirect("/he-thong");
+                    }
+                    else
+                    {
+                        ViewBag.Thongtin = "Thêm không thành công";
+                    }
                 }
                 else
                 {
-                    ViewBag.Thongtin = "Thêm không thành công";
+                    ViewBag.Email = "Email không hợp lệ";
                 }
             }
             else
             {
                 ViewBag.Thongtin = "";
+                ViewBag.Email = "";
             }
             return View();
         }
@@ -71,7 +90,14 @@ namespace Web_Dong.Controllers
             {
                 conn.Open();
                 cmd.Connection = conn;
-                cmd.CommandText = "Update Thanhvien set username='" + tv.username + "', password='" + tv.password + "', email='" + tv.email + "', hovaten= '" + tv.hovaten + "' where id = " + tv.id;
+                cmd.CommandText = "Sua_TV";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ID", SqlDbType.Int).Value = tv.id;
+                cmd.Parameters.AddWithValue("@USERNAME", SqlDbType.NVarChar).Value = tv.username;
+                cmd.Parameters.AddWithValue("@PASSWORD", SqlDbType.NVarChar).Value = tv.password;
+                cmd.Parameters.AddWithValue("@EMAIL", SqlDbType.NVarChar).Value = tv.email;
+                cmd.Parameters.AddWithValue("@HOVATEN", SqlDbType.NVarChar).Value = tv.hovaten;
+
                 int i = cmd.ExecuteNonQuery();
                 conn.Close();
                 if (i >= 1)
@@ -86,7 +112,8 @@ namespace Web_Dong.Controllers
 
             conn.Open();
             cmd.Connection = conn;
-            cmd.CommandText = "Select * from Thanhvien where id = " + id;
+            cmd.CommandText = "Tim_TV";
+            cmd.CommandType = CommandType.StoredProcedure;
             SqlDataReader dr = cmd.ExecuteReader();
             DataTable table = new DataTable();
             table.Load(dr);
@@ -101,7 +128,9 @@ namespace Web_Dong.Controllers
             }
             conn.Open();
             cmd.Connection = conn;
-            cmd.CommandText = "Delete from Thanhvien where id = " + id;
+            cmd.CommandText = "Xoa_TV";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@ID", SqlDbType.Int).Value = id;
             int i = cmd.ExecuteNonQuery();
             conn.Close();
             if (i >= 1)
@@ -122,7 +151,9 @@ namespace Web_Dong.Controllers
             }
             conn.Open();
             cmd.Connection = conn;
-            cmd.CommandText = "select * from Gioithieu where info = 'line'";
+            cmd.CommandText = "ThongTin_Gioithieu";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@INFO", SqlDbType.NVarChar).Value = "line";
             SqlDataReader dr = cmd.ExecuteReader();
             DataTable table = new DataTable();
             table.Load(dr);
@@ -140,7 +171,10 @@ namespace Web_Dong.Controllers
             {
                 conn.Open();
                 cmd.Connection = conn;
-                cmd.CommandText = "update Gioithieu set text= N'" + info.text + "' where info = 'line'";
+                cmd.CommandText = "Sua_Gioithieu";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@INFO", SqlDbType.NVarChar).Value = "line";
+                cmd.Parameters.AddWithValue("@TEXT", SqlDbType.NVarChar).Value = info.text;
                 int i = cmd.ExecuteNonQuery();
                 conn.Close();
                 if (i >= 0)
@@ -156,7 +190,9 @@ namespace Web_Dong.Controllers
             {
                 conn.Open();
                 cmd.Connection = conn;
-                cmd.CommandText = "select * from Gioithieu where info = 'line'";
+                cmd.CommandText = "ThongTin_Gioithieu";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@INFO", SqlDbType.NVarChar).Value = "line";
                 SqlDataReader dr = cmd.ExecuteReader();
                 DataTable table = new DataTable();
                 table.Load(dr);
@@ -174,7 +210,9 @@ namespace Web_Dong.Controllers
             }
             conn.Open();
             cmd.Connection = conn;
-            cmd.CommandText = "select * from TinTuc where info = 'line'";
+            cmd.CommandText = "ThongTin_TinTuc";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@INFO", SqlDbType.NVarChar).Value = "line";
             SqlDataReader dr = cmd.ExecuteReader();
             DataTable table = new DataTable();
             table.Load(dr);
@@ -192,7 +230,10 @@ namespace Web_Dong.Controllers
             {
                 conn.Open();
                 cmd.Connection = conn;
-                cmd.CommandText = "update TinTuc set text= N'" + info.text + "' where info = 'line'";
+                cmd.CommandText = "Sua_TinTuc";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@INFO", SqlDbType.NVarChar).Value = "line";
+                cmd.Parameters.AddWithValue("@TEXT", SqlDbType.NVarChar).Value = info.text;
                 int i = cmd.ExecuteNonQuery();
                 if (i >= 0)
                 {
@@ -207,7 +248,9 @@ namespace Web_Dong.Controllers
             {
                 conn.Open();
                 cmd.Connection = conn;
-                cmd.CommandText = "select * from TinTuc where info = 'line'";
+                cmd.CommandText = "ThongTin_TinTuc";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@INFO", SqlDbType.NVarChar).Value = "line";
                 SqlDataReader dr = cmd.ExecuteReader();
                 DataTable table = new DataTable();
                 table.Load(dr);
@@ -228,7 +271,8 @@ namespace Web_Dong.Controllers
             }
             conn.Open();
             cmd.Connection = conn;
-            cmd.CommandText = "Select * from Sanpham";
+            cmd.CommandText = "Danhsach_SP";
+            cmd.CommandType = CommandType.StoredProcedure;
             SqlDataReader dr = cmd.ExecuteReader();
             DataTable table = new DataTable();
             table.Load(dr);
@@ -249,20 +293,34 @@ namespace Web_Dong.Controllers
                 cmd.Connection = conn;
                 if (Hinhanh.ContentLength > 0)
                 {
-                    string _Filename = Path.GetFileName(Hinhanh.FileName);
-                    string _path = Path.Combine(Server.MapPath("~/Content/hinhanh"), _Filename);
-                    Hinhanh.SaveAs(_path);
-
-                    cmd.CommandText = "Insert into Sanpham values (N'" + sp.Tensp + "','" + sp.Giasp + "','" + sp.Mota + "','" + _Filename + "')";
-                    int i = cmd.ExecuteNonQuery();
-                    conn.Close();
-                    if (i >= 1)
+                    string _extent = Path.GetExtension(Hinhanh.FileName);
+                    ExtensionHelper ExHelper = new ExtensionHelper(_extent);
+                    if (ExHelper.accept())
                     {
-                        return Redirect("/he-thong/quan-ly-san-pham");
+                        string _Filename = Path.GetFileName(Hinhanh.FileName);
+                        string _path = Path.Combine(Server.MapPath("~/Content/hinhanh"), _Filename);
+                        Hinhanh.SaveAs(_path);
+
+                        cmd.CommandText = "Them_SP";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@TENSP", SqlDbType.NVarChar).Value = sp.Tensp;
+                        cmd.Parameters.AddWithValue("@GIASP", SqlDbType.NVarChar).Value = sp.Giasp;
+                        cmd.Parameters.AddWithValue("@MOTA", SqlDbType.Text).Value = sp.Mota;
+                        cmd.Parameters.AddWithValue("@HINHANH", SqlDbType.NVarChar).Value = _Filename;
+                        int i = cmd.ExecuteNonQuery();
+                        conn.Close();
+                        if (i >= 1)
+                        {
+                            return Redirect("/he-thong/quan-ly-san-pham");
+                        }
+                        else
+                        {
+                            ViewBag.Thongtin = "Thêm không thành công";
+                        }
                     }
                     else
                     {
-                        ViewBag.Thongtin = "Thêm không thành công";
+                        ViewBag.Thongtin = "Hình không hợp lệ";
                     }
                 }               
             }
@@ -288,7 +346,13 @@ namespace Web_Dong.Controllers
                 string _path = Path.Combine(Server.MapPath("~/Content/hinhanh"), _Filename);
                 Hinhanh.SaveAs(_path);
 
-                cmd.CommandText = "Update Sanpham set tensp= N'" + sp.Tensp + "', giasp='" + sp.Giasp + "', mota='" + sp.Mota + "', hinhanh= '" + _Filename + "' where id = " + sp.Id;
+                cmd.CommandText = "Sua_SP";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@TENSP", SqlDbType.NVarChar).Value = sp.Tensp;
+                cmd.Parameters.AddWithValue("@GIASP", SqlDbType.NVarChar).Value = sp.Giasp;
+                cmd.Parameters.AddWithValue("@MOTA", SqlDbType.Text).Value = sp.Mota;
+                cmd.Parameters.AddWithValue("@HINHANH", SqlDbType.NVarChar).Value = _Filename; 
+                
                 int i = cmd.ExecuteNonQuery();
                 conn.Close();
                 if (i >= 1)
@@ -302,8 +366,11 @@ namespace Web_Dong.Controllers
             }
 
             conn.Open();
+
             cmd.Connection = conn;
-            cmd.CommandText = "Select * from Sanpham where id = " + id;
+            cmd.CommandText = "Tim_SP";
+            cmd.CommandType = CommandType.StoredProcedure;
+
             SqlDataReader dr = cmd.ExecuteReader();
             DataTable table = new DataTable();
             table.Load(dr);
@@ -317,14 +384,29 @@ namespace Web_Dong.Controllers
                 return Redirect("/");
             }
             conn.Open();
+
             cmd.Connection = conn;
-            //cmd.CommandText = "Select hinhanh from Hinhanh where id = " + id;
-            //SqlDataReader dr = cmd.ExecuteReader();
-            //if (dr.Read())
-            //{
-            //    string image = dr.GetString(0);
-            //    string path = "~Content/hinhanh/" + image;
-            cmd.CommandText = "Delete from Sanpham where id = " + id;
+            cmd.CommandText = "Tim_HinhAnh";
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                string _image = dr.GetString(0);
+                string _path = Path.Combine(Server.MapPath("~/Content/hinhanh"), _image); ;
+                if (System.IO.File.Exists(_path))
+                {
+                    System.IO.File.Delete(_path);
+                }
+            }
+            conn.Close();
+            
+            conn.Open();
+
+            cmd.Connection = conn;
+            cmd.CommandText = "Xoa_SP";
+            cmd.CommandType = CommandType.StoredProcedure;
+
             int i = cmd.ExecuteNonQuery();
             conn.Close();
             if (i >= 1)

@@ -21,8 +21,13 @@ namespace Web_Dong.Controllers
             if (Request.HttpMethod == "POST")
             {
                 conn.Open();
+                
                 cmd.Connection = conn;
-                cmd.CommandText = "select * from Thanhvien where username='" + tv.username + "' and password='" + tv.password + "' ";
+                cmd.CommandText = "DangNhap";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@USERNAME", SqlDbType.NVarChar).Value = tv.username;
+                cmd.Parameters.AddWithValue("@PASSWORD", SqlDbType.NVarChar).Value = tv.password;
+
                 dr = cmd.ExecuteReader();
                 if (dr.Read())
                 {

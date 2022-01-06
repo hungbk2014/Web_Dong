@@ -7,25 +7,39 @@
 <td valign="top">
     <table border=0 width=600>
         <tr>
-            <td colspan=3 bgcolor="black" align="center"><font color="white">DANH SÁCH ĐỒNG HỒ </font></td>
+            <td colspan=3 bgcolor="black" align="center"><font color="white">ĐỒNG HỒ CŨ NHẤT </font></td>
         </tr>
-        @for (int i = 0; i < 3; i++)
-        {
-            <tr>
-                @for (int y = 0; y < 3; y++)
-                {
+        <tr align="center">
+            @foreach (var row in Model[0].Rows)
+            {
 
-                    <td><img src="~/Content/hinhanh/@Model.Rows[3 * i + y]["hinhanh"]" width=200 height=170></td>
+                <td>
+                    <img src="~/Content/hinhanh/@row["hinhanh"]" width=200 height=170>
+                    <font color="green">
+                        @row["tensp"]<br />
+                        @row["giasp"]
+                    </font>
+                </td>
 
-                }
-            </tr>
-            <tr>
-                @for (int y = 0; y < 3; y++)
-                {
-                    <td align="center" bgcolor="black"><font color="white">@Model.Rows[3 * i + y]["tensp"]</font></td>
-                }
-            </tr>
-        }
-            </table>
+            }
+        </tr>
+        <tr>
+            <td colspan=3 bgcolor="black" align="center"><font color="white">ĐỒNG HỒ MỚI NHẤT</font></td>
+        </tr>
+        <tr align="center">
+            @foreach (var row in Model[1].Rows)
+            {
+
+                <td>
+                    <img src="~/Content/hinhanh/@row["hinhanh"]" width=200 height=170>
+                    <font color="green">
+                        @row["tensp"]<br />
+                        @row["giasp"]
+                    </font>
+                </td>
+
+            }
+        </tr>
+    </table>
 </td>
 <!--ket thuc cot phai-->

@@ -1,4 +1,4 @@
-﻿
+﻿@using System.Data;
 @{
     ViewBag.Title = "TinTuc";
     Layout = "~/Views/Shared/MainLayout.cshtml";
@@ -10,15 +10,7 @@
             <td colspan=3 bgcolor="black" align="center"><font color="white">Tin tức </font></td>
         </tr>
         <tr>
-            <td>
-                Theo định nghĩa, đồng hồ dã chiến hay đồng hồ quân đội là một chiếc đồng hồ quân sự đơn giản, chúng được thiết kế cho những người lính đeo trong Thế chiến thứ hai. Nó được tạo ra nhằm cho biết thời gian chính xác.
-
-                Loại đồng hồ này được làm để chống bụi và chống thấm nước, thường được làm bằng vỏ thép không gỉ. Chúng thường đi kèm với dây đeo bằng vải hoặc da Nato hoặc Zulu bền để tránh làm mất đồng hồ trong chiến trường. Đồng hồ dã chiến được thiết kế để tăng / giảm tối đa +/- 30 giây mỗi ngày.
-
-                Nếu bạn đã từng thắc mắc những chiếc đồng hồ dã chiến sẽ không thể duy trì sự phổ biến của chúng khi chúng đã bị điện thoại thông minh và những thứ tương tự làm cho trở nên lỗi thời. Trong thực tế, chiếc đồng hồ dã chiến trở nên đặc biệt thú vị vì nó trái ngược với một chiếc đồng hồ thông minh!
-
-                Để hiểu được sức hấp dẫn hiện đại của một chiếc đồng hồ dã chiến, chúng ta sẽ phải xem xét lịch sử của chúng và cách chúng đã thích nghi - hoặc không thích nghi với thời đại.
-            </td>
+            <td>@Html.Raw(Model.Rows[0]["text"])</td>
         </tr>
     </table>
 </td>
