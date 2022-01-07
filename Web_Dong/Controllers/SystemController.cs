@@ -337,21 +337,45 @@ namespace Web_Dong.Controllers
             {
                 return Redirect("/");
             }
-            
+
+            conn.Open();
+
+            cmd.Connection = conn;
+            cmd.CommandText = "Tim_SP";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@ID", SqlDbType.NVarChar).Value = id;
+
+            SqlDataReader dr = cmd.ExecuteReader();
+            DataTable table = new DataTable();
+            string Image = table.Rows[0]["Hinhanh"].ToString();
+
+            table.Load(dr);
+            conn.Close();
+
             if (Request.HttpMethod == "POST")
             {
+                if (sp.Hinhanh != null)
+                {
+                    string _Image = Image;
+                    string _path = Path.Combine(Server.MapPath("~/Content/hinhanh"), _Image); ;
+                    FileInfo erase = new FileInfo(_path);
+                    erase.Delete();
+
+                    _Image = Path.GetFileName(Hinhanh.FileName);
+                    _path = Path.Combine(Server.MapPath("~/Content/hinhanh"), _Image);
+                    Image = _Image;
+                    Hinhanh.SaveAs(_path);
+                }
+                
+
                 conn.Open();
                 cmd.Connection = conn;
-                string _Filename = Path.GetFileName(Hinhanh.FileName);
-                string _path = Path.Combine(Server.MapPath("~/Content/hinhanh"), _Filename);
-                Hinhanh.SaveAs(_path);
-
                 cmd.CommandText = "Sua_SP";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@TENSP", SqlDbType.NVarChar).Value = sp.Tensp;
                 cmd.Parameters.AddWithValue("@GIASP", SqlDbType.NVarChar).Value = sp.Giasp;
                 cmd.Parameters.AddWithValue("@MOTA", SqlDbType.Text).Value = sp.Mota;
-                cmd.Parameters.AddWithValue("@HINHANH", SqlDbType.NVarChar).Value = _Filename; 
+                cmd.Parameters.AddWithValue("@HINHANH", SqlDbType.NVarChar).Value = Image; 
                 
                 int i = cmd.ExecuteNonQuery();
                 conn.Close();
@@ -365,16 +389,7 @@ namespace Web_Dong.Controllers
                 }
             }
 
-            conn.Open();
-
-            cmd.Connection = conn;
-            cmd.CommandText = "Tim_SP";
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            SqlDataReader dr = cmd.ExecuteReader();
-            DataTable table = new DataTable();
-            table.Load(dr);
-            conn.Close();
+            
             return View(table);
         }
         public ActionResult DeleteProduct(int id)
@@ -394,10 +409,8 @@ namespace Web_Dong.Controllers
             {
                 string _image = dr.GetString(0);
                 string _path = Path.Combine(Server.MapPath("~/Content/hinhanh"), _image); ;
-                if (System.IO.File.Exists(_path))
-                {
-                    System.IO.File.Delete(_path);
-                }
+                FileInfo erase = new FileInfo(_path);
+                erase.Delete();
             }
             conn.Close();
             
